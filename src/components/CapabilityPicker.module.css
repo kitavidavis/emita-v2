@@ -1,0 +1,48 @@
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--color-divider);
+  border-left: 1px solid var(--color-divider);
+}
+.tab {
+  position: relative;
+  text-align: left;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  border: 0;
+  border-right: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
+  padding: 26px 24px 24px 28px;
+  font-family: var(--font-body);
+}
+.tab:hover { background: var(--color-neutral-200); }
+.selBar { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--color-accent); }
+.tabTitle { font-family: var(--font-heading); font-weight: 800; font-size: 19px; letter-spacing: -0.015em; margin-bottom: 8px; }
+.tabBody { font-size: 13px; color: var(--color-neutral-700); line-height: 1.45; }
+
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  border-bottom: 2px solid var(--color-divider);
+  border-left: 1px solid var(--color-divider);
+}
+.detailLeft { padding: 34px 28px; border-right: 1px solid var(--color-divider); background: var(--color-surface); }
+.detailRight { padding: 34px 28px; background: var(--color-surface); }
+.kicker { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 10px; }
+.detailTitle { font-size: 30px; letter-spacing: -0.025em; margin: 0 0 12px; }
+.detailBody { font-size: 14.5px; color: var(--color-neutral-800); margin: 0 0 20px; }
+.coversLabel { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 16px; }
+.coversGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.coversRow { display: flex; gap: 12px; padding: 11px 16px 11px 0; border-top: 1px solid var(--color-divider); font-size: 14px; }
+.coversDash { color: var(--color-accent); font-family: ui-monospace, Menlo, monospace; font-size: 11px; padding-top: 3px; }
+
+@media (max-width: 900px) {
+  .tabs { grid-template-columns: repeat(2, 1fr); }
+  .detail { grid-template-columns: 1fr; }
+  .detailLeft { border-right: 0; border-bottom: 1px solid var(--color-divider); }
+  .coversGrid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .tabs { grid-template-columns: 1fr; }
+}
