@@ -291,7 +291,7 @@
 /* — Leaflet network map — */
 .leafletWrap { position: relative; height: 640px; }
 .leafletWrap :global(.leaflet-container) { width: 100%; height: 100%; background: var(--d-panel-2); font-family: var(--font-body); }
-.leafletLegend { position: absolute; top: 14px; left: 14px; z-index: 1000; background: var(--d-panel); border: 1px solid var(--d-line-2); min-width: 190px; }
+.leafletLegend { position: absolute; bottom: 30px; right: 10px; z-index: 1000; background: var(--d-panel); border: 1px solid var(--d-line-2); min-width: 190px; }
 .leafletLegendHead { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; font-family: var(--font-heading); font-weight: 700; font-size: 12.5px; color: var(--d-ink); cursor: pointer; appearance: none; background: transparent; border: 0; width: 100%; text-align: left; }
 .leafletLegendBody { padding: 2px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
 .leafletLegendItem { display: flex; align-items: center; gap: 9px; font-size: 11.5px; color: var(--d-ink-2); }
@@ -302,6 +302,40 @@
 .leafletCtxItem:last-child { border-bottom: 0; }
 .leafletCtxItem:hover { background: var(--d-chip); color: var(--d-ink); }
 .leafletLoading { display: flex; align-items: center; justify-content: center; height: 640px; background: var(--d-panel-2); color: var(--d-ink-3); font-size: 13px; border: 1px solid var(--d-line); }
+
+/* — GIS drawing toolbar, side panels, measurement, modals — */
+.gisToolbar { position: absolute; top: 90px; left: 10px; z-index: 1000; display: flex; flex-direction: column; background: var(--d-panel); border: 1px solid var(--d-line-2); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.gisToolBtn { appearance: none; cursor: pointer; background: transparent; border: 0; border-bottom: 1px solid var(--d-line); color: var(--d-ink-2); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; flex: none; }
+.gisToolBtn:last-child { border-bottom: 0; }
+.gisToolBtn:hover { background: var(--d-chip); color: var(--d-ink); }
+.gisToolBtnActive { background: var(--d-accent); color: #fff; }
+.gisToolDivider { height: 1px; background: var(--d-line-2); margin: 3px 0; }
+
+.gisActionBar { position: absolute; top: 90px; left: 56px; z-index: 1000; display: flex; gap: 10px; align-items: center; background: var(--d-panel); border: 1px solid var(--d-line-2); padding: 8px 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.gisActionBar span { font-size: 11.5px; color: var(--d-ink-2); white-space: nowrap; }
+
+.gisPanel { position: absolute; top: 50px; right: 10px; z-index: 999; width: 270px; background: var(--d-panel); border: 1px solid var(--d-line-2); max-height: 62%; display: flex; flex-direction: column; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.gisPanelHead { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--d-line); font-family: var(--font-heading); font-weight: 700; font-size: 12.5px; color: var(--d-ink); flex: none; }
+.gisPanelList { overflow-y: auto; flex: 1; }
+.gisPanelRow { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid var(--d-line); font-size: 12px; color: var(--d-ink-2); }
+.gisPanelRow:last-child { border-bottom: 0; }
+.gisPanelFoot { padding: 10px 12px; display: flex; gap: 8px; border-top: 1px solid var(--d-line); flex: none; }
+.gisPanelEmpty { padding: 20px 12px; text-align: center; font-size: 12px; color: var(--d-ink-3); }
+.gisIconBtn { appearance: none; cursor: pointer; background: transparent; border: 1px solid var(--d-line); color: var(--d-ink-3); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex: none; }
+.gisIconBtn:hover { border-color: var(--d-accent); color: var(--d-ink); }
+
+.gisLayersToggle { position: absolute; top: 10px; right: 56px; z-index: 998; }
+.gisMeasureBadge { position: absolute; top: 90px; left: 56px; z-index: 1000; background: var(--d-panel); border: 1px solid var(--d-line-2); padding: 7px 12px; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; color: var(--d-ink); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+
+.gisModalOverlay { position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; }
+.gisModal { width: min(440px, 90vw); background: var(--d-panel); border: 1px solid var(--d-line-2); }
+.gisModalHead { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; border-bottom: 1px solid var(--d-line); font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--d-ink); }
+.gisModalBody { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.gisModalFoot { padding: 14px 18px; border-top: 1px solid var(--d-line); display: flex; justify-content: flex-end; gap: 10px; }
+.gisField { display: block; }
+.gisField span { display: block; font-size: 11.5px; color: var(--d-ink-3); margin-bottom: 6px; }
+.gisField input, .gisField select, .gisField textarea { width: 100%; background: var(--d-panel-2); border: 1px solid var(--d-line); color: var(--d-ink); font-family: var(--font-body); font-size: 13px; padding: 9px 12px; }
+.gisField textarea { resize: vertical; min-height: 70px; }
 
 /* — audit log feed — */
 .logRow { border-bottom: 1px solid var(--d-line); }
