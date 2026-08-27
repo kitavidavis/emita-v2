@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { SupportView } from "@/components/console/SupportView";
 
 export default function SupportPage() {
-  return <ModulePlaceholder moduleKey="support" />;
+  return <SupportView />;
 }

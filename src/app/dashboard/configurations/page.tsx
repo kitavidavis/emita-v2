@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { ConfigurationsView } from "@/components/console/ConfigurationsView";
 
 export default function ConfigurationsPage() {
-  return <ModulePlaceholder moduleKey="configurations" />;
+  return <ConfigurationsView />;
 }

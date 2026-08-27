@@ -161,7 +161,7 @@ export function NetworkSupplySection({ trend }: { trend: { sup: string; con: str
               <g stroke="var(--d-ink)" strokeWidth="1" opacity="0.12">
                 <path d="M40 30H690M40 70H690M40 110H690M40 150H690M40 184H690" />
               </g>
-              <path d={`${trend.sup} L690 184 L40 184 Z`} fill="rgba(47,128,237,0.18)" />
+              <path d={`${trend.sup} L690 184 L40 184 Z`} fill="rgba(76,194,255,0.18)" />
               <path d={trend.sup} fill="none" stroke="var(--d-cyan)" strokeWidth="2.5" />
               <path d={trend.con} fill="none" stroke="var(--d-accent)" strokeWidth="2.5" />
               <g fontFamily="Space Grotesk, sans-serif" fontSize="10" fill="var(--d-ink-3)" letterSpacing="0.6">

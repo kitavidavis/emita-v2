@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { ReportsView } from "@/components/console/ReportsView";
 
 export default function ReportsPage() {
-  return <ModulePlaceholder moduleKey="reports" />;
+  return <ReportsView />;
 }

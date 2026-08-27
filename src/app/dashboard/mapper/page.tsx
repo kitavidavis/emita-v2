@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { MapperView } from "@/components/console/MapperView";
 
 export default function InventoryMapperPage() {
-  return <ModulePlaceholder moduleKey="mapper" />;
+  return <MapperView />;
 }

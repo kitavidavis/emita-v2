@@ -1,5 +1,5 @@
-import { NetworkMapView } from "@/components/console/PremiumViews";
+import { NetworkMapLoader } from "@/components/console/NetworkMapLoader";
 
 export default function NetworkMapPage() {
-  return <NetworkMapView />;
+  return <NetworkMapLoader />;
 }

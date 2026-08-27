@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { LogsView } from "@/components/console/LogsView";
 
 export default function LogsPage() {
-  return <ModulePlaceholder moduleKey="logs" />;
+  return <LogsView />;
 }

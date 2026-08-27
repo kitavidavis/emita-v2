@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { AssetsView } from "@/components/console/AssetsView";
 
 export default function UtilityAssetsPage() {
-  return <ModulePlaceholder moduleKey="assets" />;
+  return <AssetsView />;
 }

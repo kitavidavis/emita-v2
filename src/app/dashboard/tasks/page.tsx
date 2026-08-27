@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { TasksView } from "@/components/console/TasksView";
 
 export default function TasksPage() {
-  return <ModulePlaceholder moduleKey="tasks" />;
+  return <TasksView />;
 }

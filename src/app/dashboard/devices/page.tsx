@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { DevicesView } from "@/components/console/DevicesView";
 
 export default function DevicesPage() {
-  return <ModulePlaceholder moduleKey="devices" />;
+  return <DevicesView />;
 }

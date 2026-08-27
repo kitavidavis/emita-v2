@@ -1,24 +1,26 @@
-/* Dashboard-scoped design tokens — ported from Emita Console v2.dc.html's
-   own :root / [data-emita-theme="light"] blocks. Deliberately separate from
-   the marketing site's globals.css: this is a dark operations console by
-   default, not the light marketing/auth surface. */
+/* Dashboard-scoped design tokens — Microsoft's Fluent dark/light neutral
+   ramps (Windows 11 / Microsoft 365 dark mode): warm, true neutral greys
+   for surfaces, not a tinted navy, with Fluent's communication blue as the
+   one accent hue. Deliberately separate from the marketing site's
+   globals.css: this is a dark operations console by default, not the
+   light marketing/auth surface. */
 
 .shell {
-  --d-bg: #071726;
-  --d-panel: #0b1f33;
-  --d-panel-2: #102b44;
-  --d-ink: #f7f9fc;
-  --d-ink-2: #a9bacb;
-  --d-ink-3: #7a8da1;
-  --d-line: rgba(255, 255, 255, 0.14);
-  --d-line-2: rgba(255, 255, 255, 0.28);
+  --d-bg: #1f1f1f;
+  --d-panel: #292929;
+  --d-panel-2: #333333;
+  --d-ink: #f5f5f5;
+  --d-ink-2: #c8c6c4;
+  --d-ink-3: #8a8886;
+  --d-line: rgba(255, 255, 255, 0.09);
+  --d-line-2: rgba(255, 255, 255, 0.18);
   --d-chip: rgba(255, 255, 255, 0.06);
-  --d-accent: #2f80ed;
-  --d-cyan: #00d4ff;
-  --d-ok: #2fbf71;
-  --d-warn: #e9a13b;
-  --d-bad: #f0663f;
-  --d-mut: #7a8da1;
+  --d-accent: #0078d4;
+  --d-cyan: #4cc2ff;
+  --d-ok: #6ccb5f;
+  --d-warn: #ffb900;
+  --d-bad: #f1707b;
+  --d-mut: #8a8886;
 
   display: flex;
   min-height: 100vh;
@@ -28,18 +30,19 @@
 }
 
 .shell[data-theme="light"] {
-  --d-bg: #f7f9fc;
+  --d-bg: #faf9f8;
   --d-panel: #ffffff;
-  --d-panel-2: #f2f5f9;
-  --d-ink: #111827;
-  --d-ink-2: #4a5567;
-  --d-ink-3: #667085;
-  --d-line: rgba(17, 24, 39, 0.14);
-  --d-line-2: rgba(17, 24, 39, 0.28);
-  --d-chip: rgba(17, 24, 39, 0.04);
-  --d-ok: #14804a;
-  --d-warn: #b54708;
-  --d-bad: #c4320a;
+  --d-panel-2: #f3f2f1;
+  --d-ink: #201f1e;
+  --d-ink-2: #484644;
+  --d-ink-3: #605e5c;
+  --d-line: rgba(32, 31, 30, 0.09);
+  --d-line-2: rgba(32, 31, 30, 0.18);
+  --d-chip: rgba(32, 31, 30, 0.04);
+  --d-ok: #107c10;
+  --d-warn: #8a6d00;
+  --d-bad: #a4262c;
+  --d-mut: #605e5c;
 }
 
 /* — tone helpers (used inline via style, kept here for reference) — */
@@ -79,7 +82,7 @@
 .navGroupLabel { display: flex; align-items: center; gap: 8px; padding: 14px 16px 8px; margin-top: 4px; border-top: 1px solid var(--d-line); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--d-ink-3); }
 .navItem { width: 100%; appearance: none; cursor: pointer; background: transparent; border: 0; border-left: 3px solid transparent; color: var(--d-ink-2); font-family: var(--font-body); font-size: 13.5px; display: flex; align-items: center; gap: 11px; padding: 10px 16px; text-align: left; text-decoration: none; }
 .navItem:hover { background: var(--d-chip); color: var(--d-ink); }
-.navItemActive { background: rgba(47, 128, 237, 0.16); border-left-color: var(--d-accent); color: var(--d-ink); font-weight: 600; }
+.navItemActive { background: rgba(0, 120, 212, 0.16); border-left-color: var(--d-accent); color: var(--d-ink); font-weight: 600; }
 .navIcon { flex: none; }
 .navLabel { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .navTag { font-family: ui-monospace, Menlo, monospace; font-size: 9px; letter-spacing: 0.08em; border: 1px solid currentColor; padding: 1px 5px; flex: none; }
@@ -128,6 +131,8 @@
 .panelTitle { font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--d-ink); }
 
 .statGrid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--d-line); background: var(--d-panel); }
+.statGrid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--d-line); background: var(--d-panel); }
+@media (max-width: 1100px) { .statGrid3 { grid-template-columns: minmax(0, 1fr); } }
 .statCell { padding: 18px 22px; border-right: 1px solid var(--d-line); }
 .statCell:last-child { border-right: 0; }
 .statLabelRow { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
@@ -174,7 +179,7 @@
 .dBtn { appearance: none; cursor: pointer; font-family: var(--font-body); font-size: 12.5px; padding: 9px 15px; border: 1px solid var(--d-line); background: transparent; color: var(--d-ink-2); }
 .dBtn:hover { border-color: var(--d-accent); color: var(--d-ink); }
 .dBtnPrimary { background: var(--d-accent); color: #fff; border: 0; font-weight: 600; }
-.dBtnPrimary:hover { background: #1f6ad1; color: #fff; }
+.dBtnPrimary:hover { background: #106ebe; color: #fff; }
 
 .filterRow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .filterBtn { appearance: none; cursor: pointer; background: transparent; border: 1px solid var(--d-line); color: var(--d-ink-2); font-family: var(--font-body); font-size: 12.5px; padding: 8px 14px; }
@@ -261,6 +266,9 @@
 /* — shortcut / explainer action cards — */
 .cardGrid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 @media (max-width: 1100px) { .cardGrid3 { grid-template-columns: minmax(0, 1fr); } }
+.cardGrid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 1100px) { .cardGrid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .cardGrid4 { grid-template-columns: minmax(0, 1fr); } }
 .actionCard { border: 1px solid var(--d-line); background: var(--d-panel); padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
 .actionCardRow { flex-direction: row; align-items: center; gap: 12px; }
 .actionIcon { width: 28px; height: 28px; background: var(--d-chip); border: 1px solid var(--d-line); display: flex; align-items: center; justify-content: center; flex: none; }
@@ -269,6 +277,42 @@
 .actionCta { font-size: 11.5px; font-weight: 600; color: var(--d-accent); text-decoration: none; white-space: nowrap; }
 .actionKicker { font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--d-ink-3); }
 .actionQuestion { font-family: var(--font-heading); font-weight: 700; font-size: 13.5px; color: var(--d-ink); }
+
+/* — tariff component stepper (Billing → Tariffs) — */
+.tariffStepper { list-style: none; margin: 0; padding: 20px 22px; }
+.tariffStep { position: relative; padding: 0 0 20px 26px; border-left: 1.5px solid var(--d-line); }
+.tariffStep:last-child { border-left-color: transparent; padding-bottom: 0; }
+.tariffStepDot { position: absolute; left: -6px; top: 1px; width: 11px; height: 11px; background: var(--d-panel); border: 2px solid var(--d-line-2); }
+.tariffStepHead { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; flex-wrap: wrap; }
+.tariffStepLabel { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; color: var(--d-ink); }
+.tariffStepType { font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid currentColor; padding: 1px 6px; flex: none; }
+.tariffStepSummary { font-size: 12.5px; color: var(--d-ink-2); line-height: 1.5; max-width: 46ch; }
+
+/* — Leaflet network map — */
+.leafletWrap { position: relative; height: 640px; }
+.leafletWrap :global(.leaflet-container) { width: 100%; height: 100%; background: var(--d-panel-2); font-family: var(--font-body); }
+.leafletLegend { position: absolute; top: 14px; left: 14px; z-index: 1000; background: var(--d-panel); border: 1px solid var(--d-line-2); min-width: 190px; }
+.leafletLegendHead { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; font-family: var(--font-heading); font-weight: 700; font-size: 12.5px; color: var(--d-ink); cursor: pointer; appearance: none; background: transparent; border: 0; width: 100%; text-align: left; }
+.leafletLegendBody { padding: 2px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+.leafletLegendItem { display: flex; align-items: center; gap: 9px; font-size: 11.5px; color: var(--d-ink-2); }
+.leafletLegendSwatch { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.leafletCtxMenu { position: absolute; z-index: 2000; background: var(--d-panel); border: 1px solid var(--d-line-2); min-width: 240px; box-shadow: 0 12px 32px rgba(0,0,0,0.45); }
+.leafletCtxHead { padding: 9px 14px; font-size: 10.5px; color: var(--d-ink-3); border-bottom: 1px solid var(--d-line); font-family: ui-monospace, Menlo, monospace; }
+.leafletCtxItem { display: block; width: 100%; text-align: left; appearance: none; background: transparent; border: 0; border-bottom: 1px solid var(--d-line); padding: 10px 14px; cursor: pointer; font-family: var(--font-body); font-size: 12.5px; color: var(--d-ink-2); }
+.leafletCtxItem:last-child { border-bottom: 0; }
+.leafletCtxItem:hover { background: var(--d-chip); color: var(--d-ink); }
+.leafletLoading { display: flex; align-items: center; justify-content: center; height: 640px; background: var(--d-panel-2); color: var(--d-ink-3); font-size: 13px; border: 1px solid var(--d-line); }
+
+/* — audit log feed — */
+.logRow { border-bottom: 1px solid var(--d-line); }
+.logRow:last-child { border-bottom: 0; }
+.logRowHead { display: flex; align-items: center; gap: 14px; padding: 12px 20px; cursor: pointer; appearance: none; background: transparent; border: 0; width: 100%; text-align: left; }
+.logRowHead:hover { background: var(--d-chip); }
+.logChevron { flex: none; transition: transform 0.15s ease; color: var(--d-ink-3); }
+.logChevronOpen { transform: rotate(90deg); }
+.logPayload { padding: 2px 20px 16px 49px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 7px 20px; }
+.logPayloadKey { color: var(--d-ink-3); margin-right: 6px; font-size: 11.5px; }
+.logPayloadVal { font-family: ui-monospace, Menlo, monospace; color: var(--d-ink-2); font-size: 12px; }
 
 /* — module placeholder — */
 .placeholderCard { border: 1px solid var(--d-line); background: var(--d-panel); padding: 32px; }

@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { StaffView } from "@/components/console/StaffView";
 
 export default function StaffPage() {
-  return <ModulePlaceholder moduleKey="staff" />;
+  return <StaffView />;
 }

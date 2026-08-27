@@ -6,8 +6,6 @@ import {
   ZONE_FILTERS,
   ZONE_ROWS,
   CASE_COLUMNS,
-  NET_LAYERS,
-  MAP_SELECTED_ZONE,
   REVENUE_ROWS,
   REVENUE_STATS,
   CONNECTORS,
@@ -92,53 +90,6 @@ export function InvestigationsView() {
           ))}
         </div>
       ))}
-    </div>
-  );
-}
-
-export function NetworkMapView() {
-  return (
-    <div className={styles.panel} style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 260px" }}>
-      <div style={{ borderRight: "1px solid var(--d-line)" }}>
-        <svg viewBox="0 0 900 540" style={{ width: "100%", height: "auto", display: "block", background: "var(--d-panel-2)" }}>
-          <g stroke="var(--d-ink)" strokeWidth="1" opacity="0.1">
-            <path d="M0 90H900M0 180H900M0 270H900M0 360H900M0 450H900" />
-            <path d="M100 0V540M200 0V540M300 0V540M400 0V540M500 0V540M600 0V540M700 0V540M800 0V540" />
-          </g>
-          <path d="M280 60H620V300H280Z" fill="var(--d-accent)" opacity="0.1" />
-          <path d="M280 60H620V300H280Z" fill="none" stroke="var(--d-accent)" strokeWidth="2" />
-          <g stroke="var(--d-ink)" strokeWidth="2.5" fill="none" opacity="0.8">
-            <path d="M60 480L200 370L360 390L480 210L700 240L850 130" />
-            <path d="M200 370L240 130" /><path d="M360 390L400 510" /><path d="M480 210L600 450L820 480" />
-          </g>
-          <g fill="var(--d-cyan)"><circle cx="200" cy="370" r="6" /><circle cx="360" cy="390" r="6" /><circle cx="700" cy="240" r="6" /><circle cx="600" cy="450" r="6" /><circle cx="240" cy="130" r="6" /></g>
-          <circle cx="480" cy="210" r="11" fill="var(--d-bad)" />
-          <g fontFamily="Space Grotesk, sans-serif" fontSize="11" letterSpacing="1" fill="var(--d-ink-2)">
-            <text x="286" y="52">ELUGULU NORTH — 44% UNACCOUNTED</text>
-            <text x="500" y="204">LEAK CANDIDATE</text>
-            <text x="712" y="234">BOREHOLE 2</text>
-            <text x="246" y="124">TANK A</text>
-          </g>
-        </svg>
-      </div>
-      <div>
-        <div style={{ padding: "15px 18px", borderBottom: "1px solid var(--d-line)", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "var(--d-ink)" }}>Layers</div>
-        {NET_LAYERS.map((l) => (
-          <div key={l.name} style={{ display: "flex", alignItems: "center", gap: 11, padding: "12px 18px", borderBottom: "1px solid var(--d-line)", fontSize: 13 }}>
-            <span style={{ width: 15, height: 15, border: `1.5px solid ${l.on ? "var(--d-accent)" : "var(--d-line-2)"}`, background: l.on ? "var(--d-accent)" : "transparent", color: "#fff", fontSize: 10, display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>
-              {l.on ? "✓" : ""}
-            </span>
-            <span style={{ flex: 1, color: "var(--d-ink)" }}>{l.name}</span>
-            <span className={styles.mono} style={{ color: "var(--d-ink-3)" }}>{l.count}</span>
-          </div>
-        ))}
-        <div style={{ padding: "16px 18px" }}>
-          <div style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--d-ink-3)", marginBottom: 9 }}>Selected</div>
-          <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, marginBottom: 6, color: "var(--d-ink)" }}>{MAP_SELECTED_ZONE.name}</div>
-          <div style={{ fontSize: 12.5, color: "var(--d-ink-2)", marginBottom: 14 }}>{MAP_SELECTED_ZONE.note}</div>
-          <button type="button" className={`${styles.dBtn} ${styles.dBtnPrimary}`} style={{ width: "100%" }}>Open investigation</button>
-        </div>
-      </div>
     </div>
   );
 }

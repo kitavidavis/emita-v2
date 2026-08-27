@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { AccessView } from "@/components/console/AccessView";
 
 export default function AccessPage() {
-  return <ModulePlaceholder moduleKey="access" />;
+  return <AccessView />;
 }

@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { SupplyView } from "@/components/console/SupplyView";
 
 export default function SupplyHistoryPage() {
-  return <ModulePlaceholder moduleKey="supply" />;
+  return <SupplyView />;
 }

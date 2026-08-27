@@ -1,5 +1,5 @@
-import { ModulePlaceholder } from "@/components/console/ModulePlaceholder";
+import { IncidentsView } from "@/components/console/IncidentsView";
 
 export default function IncidentsPage() {
-  return <ModulePlaceholder moduleKey="incidents" />;
+  return <IncidentsView />;
 }

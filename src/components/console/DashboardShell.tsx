@@ -19,7 +19,10 @@ import {
 
 function findActiveKey(pathname: string): { key: string; premium: boolean } {
   const all = [...PREMIUM_NAV_ITEMS.map((n) => ({ ...n, premium: true })), ...NAV_ITEMS.map((n) => ({ ...n, premium: false }))];
-  const hit = all.find((n) => (n.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(n.href)));
+  // "/dashboard" itself (Home) only ever matches exactly — as a prefix it would swallow every
+  // other route. Everything else needs a real path-segment boundary: "/dashboard/map" must not
+  // match "/dashboard/mapper" just because one string happens to start with the other.
+  const hit = all.find((n) => (n.href === "/dashboard" ? pathname === "/dashboard" : pathname === n.href || pathname.startsWith(`${n.href}/`)));
   return hit ? { key: hit.key, premium: hit.premium } : { key: "home", premium: false };
 }
 

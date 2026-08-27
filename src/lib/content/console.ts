@@ -52,7 +52,7 @@ export const NAV_ITEMS: NavItem[] = [
   { key: "logs", label: "Logs", icon: "log", href: "/dashboard/logs" },
   { key: "support", label: "Support", icon: "support", href: "/dashboard/support" },
   { key: "settings", label: "Settings", icon: "settings", href: "/dashboard/settings" },
-  { key: "mapper", label: "Inventory Mapper", icon: "map", href: "/dashboard/mapper", tag: "9+", tagAccent: true },
+  { key: "mapper", label: "Inventory Mapper", icon: "map", href: "/dashboard/mapper", tag: "7", tagAccent: true },
   { key: "assets", label: "Utility Assets", icon: "asset", href: "/dashboard/assets" },
   { key: "access", label: "Access", icon: "access", href: "/dashboard/access", tag: "BETA" },
 ];
@@ -68,26 +68,26 @@ export const PREMIUM_NAV_ITEMS: NavItem[] = [
 export const TITLES: Record<string, [string, string]> = {
   home: ["Home", "Malanga Elugulu / Bwaliro Water Project · July 2026"],
   customers: ["Customers", "286 accounts across 6 zones"],
-  billing: ["Billing", "July 2026 cycle · 4 runs this year"],
+  billing: ["Billing", "August 2026 cycle · 4 runs this year"],
   staff: ["Staff", "9 users · SSO not configured"],
-  tasks: ["Tasks", "14 open across 4 stages"],
+  tasks: ["Tasks", "Meter reads and supply-point reads, tracked separately"],
   supply: ["Supply History", "7 intake points · 12 months retained"],
   reports: ["Reports", "Generated on demand or on a schedule"],
   devices: ["Devices", "312 meters registered · 41 connected"],
-  config: ["Configurations", "Tariffs, zones, notifications"],
-  incidents: ["Incidents", "6 open · 2 breaching response time"],
-  logs: ["Logs", "Every change, who made it and when"],
+  config: ["Configurations", "Notifications, zones, fees and automation"],
+  incidents: ["Incidents", "3 open · 2 breaching response time"],
+  logs: ["Logs", "Every event, from every service"],
   support: ["Support", "Documentation, training and contact"],
   settings: ["Settings", "Project, security and data"],
-  mapper: ["Inventory Mapper", "9 unmapped assets waiting"],
+  mapper: ["Inventory Mapper", "7 field captures awaiting review"],
   assets: ["Utility Assets", "Pumps, tanks, mains and valves"],
-  access: ["Access", "Beta · granular permissions and 2FA"],
+  access: ["Access", "Beta · scoped API keys for external parties"],
 };
 
 export const PREMIUM_TITLES: Record<string, [string, string]> = {
   zones: ["Zones & NRW", "6 zones · flow balance recomputed 04:05 EAT"],
   cases: ["Investigations", "8 open cases · ranked by volume at risk"],
-  netmap: ["Network map", "Mains, zones and assets in geographic context"],
+  netmap: ["Network map", "Zones, customers, mains and supply points, in geographic context"],
   revenue: ["Revenue intelligence", "Billed against measured, exception detection"],
   integrations: ["Integrations", "9 connectors · meters, billing, GIS, messaging"],
 };
@@ -170,8 +170,8 @@ export const ATTENTION_ITEMS = [
   { title: "3 intake points have no zone tag", meta: "Blocks NRW flow balance", tag: "Blocking", tone: "bad" as Tone },
   { title: "12 payments unmatched", meta: "M-Pesa reference mismatch", tag: "Billing", tone: "warn" as Tone },
   { title: "July bill run awaiting approval", meta: "286 bills · KSh 316,190", tag: "Review", tone: "accent" as Tone },
-  { title: "9 assets unmapped", meta: "Inventory Mapper", tag: "Data", tone: "warn" as Tone },
-  { title: "2FA not enforced for 6 staff", meta: "Security recommendation", tag: "Security", tone: "warn" as Tone },
+  { title: "7 field captures awaiting review", meta: "Inventory Mapper", tag: "Data", tone: "warn" as Tone },
+  { title: "2FA not enrolled for 5 staff", meta: "Security recommendation", tag: "Security", tone: "warn" as Tone },
 ];
 
 export const ACTIVITY_FEED = [
@@ -217,21 +217,8 @@ export const CASE_COLUMNS = [
   ]},
 ];
 
-// ---- Premium: Network map ----
-
-export const NET_LAYERS = [
-  { name: "Zones", count: "6", on: true },
-  { name: "Distribution mains", count: "38 km", on: true },
-  { name: "Meters", count: "312", on: true },
-  { name: "Bulk meters", count: "7", on: true },
-  { name: "Open cases", count: "8", on: true },
-  { name: "Assets", count: "24", on: false },
-];
-
-export const MAP_SELECTED_ZONE = {
-  name: "Elugulu North",
-  note: "Night flow stepped up 41% on 12 Jul and has held. Two candidate mains inside the flagged span.",
-};
+// Network map layer config now lives with react-leaflet's own LayersControl —
+// see components/console/NetworkMap.tsx and lib/content/geomap.ts.
 
 // ---- Premium: Revenue intelligence ----
 
@@ -263,71 +250,6 @@ export const CONNECTORS = [
   { name: "WASREB reporting", mark: "WA", note: "Quarterly regulator return template.", state: "Connected", tone: "ok" as Tone, sync: "Q2 FILED" },
   { name: "Emita open API", mark: "API", note: "Outbound endpoints and webhooks.", state: "2 keys", tone: "mut" as Tone, sync: "—" },
 ];
-
-// ---- Free-tier module placeholders ----
-
-export const MODULE_COPY: Record<string, { body: string; covers: string[] }> = {
-  customers: {
-    body: "The customer register — every account, meter link, zone assignment and balance in one place.",
-    covers: ["Account and meter linkage", "Zone and route assignment", "Balance and payment history", "Bulk import from CSV"],
-  },
-  billing: {
-    body: "Run billing cycles, track collection and reconcile payments against issued bills.",
-    covers: ["Monthly bill runs", "Tariff bands and standing charges", "M-Pesa reconciliation", "Statements and reminders"],
-  },
-  staff: {
-    body: "Invite staff, assign roles and see who has access to what across the utility.",
-    covers: ["Role-based permissions", "Invitations and onboarding", "Two-factor enforcement", "Activity by user"],
-  },
-  tasks: {
-    body: "The work queue for the team — field visits, follow-ups and approvals in one board.",
-    covers: ["Stages from open to closed", "Assignment and due dates", "Linked cases and accounts"],
-  },
-  supply: {
-    body: "Bulk and intake readings over time, the raw series that flow balance is computed from.",
-    covers: ["Per-intake-point history", "Manual and telemetry entries", "Export for offline analysis"],
-  },
-  reports: {
-    body: "Generate the regulator, board and operational reports the utility needs on a schedule.",
-    covers: ["WASREB return template", "Custom report builder", "Scheduled delivery by email"],
-  },
-  devices: {
-    body: "The device fleet — connectivity, battery and read quality across every meter and gateway.",
-    covers: ["Connection status", "Battery and signal health", "Firmware and swap records"],
-  },
-  configurations: {
-    body: "The settings that shape how the console computes and bills — tariffs, zones and alerts.",
-    covers: ["Tariff bands", "Zone boundaries and tags", "Notification rules"],
-  },
-  incidents: {
-    body: "Log and track field incidents — bursts, leaks and outages — from report to resolution.",
-    covers: ["Incident logging", "Response time tracking", "Resolution notes and history"],
-  },
-  logs: {
-    body: "A complete audit trail — every change, who made it, and when.",
-    covers: ["User and system actions", "Filter by account or module", "Exportable for audits"],
-  },
-  support: {
-    body: "Documentation, training material and a direct line to the Emita team.",
-    covers: ["Guides and templates", "Training bookings", "Contact support"],
-  },
-  settings: {
-    body: "Project details, security policy and data retention for this utility.",
-    covers: ["Project and org details", "Security policy", "Data export and retention"],
-  },
-  mapper: {
-    body: "Assets waiting to be placed on the network map — boreholes, tanks, mains and kiosks.",
-    covers: ["Unplaced asset queue", "Coordinate and boundary import", "Zone assignment"],
-  },
-  assets: {
-    body: "The physical inventory — pumps, tanks, mains and valves, with condition and service history.",
-    covers: ["Asset register", "Condition and service due dates", "Install and swap history"],
-  },
-  access: {
-    body: "Granular, role-based permissions and two-factor enforcement across the utility's staff.",
-    covers: ["Custom roles and scopes", "Two-factor enrollment status", "Enforce for all staff"],
-  },
-};
 
 // ---- Home / Overview — deeper sections below the KPI row ----
 
@@ -412,7 +334,7 @@ export const EXPLAINER_CARDS = [
   {
     title: "Inventory Mapper",
     question: "What is the Inventory Mapper?",
-    body: "An offline-first mobile app for field teams to record the exact location of meters, mains and storage assets as they're installed.",
+    body: "An offline-first field app for capturing new customers and new infrastructure — pipelines, tanks, valves — with exact coordinates. Every capture lands here as a draft for review before it merges into the real register.",
     cta: "Open Inventory Mapper",
     href: "/dashboard/mapper",
   },
