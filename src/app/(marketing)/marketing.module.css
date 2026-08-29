@@ -1,0 +1,6 @@
+/* Scoped to the marketing site only — an experiment in a sharper, lighter display
+   face for headings, without touching the auth/console/backoffice typography. */
+.marketingType {
+  --font-heading: var(--font-bricolage), var(--font-space-grotesk), system-ui, sans-serif;
+  --font-heading-weight: 300;
+}

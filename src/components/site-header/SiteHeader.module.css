@@ -1,50 +1,3 @@
-.announce {
-  background: var(--color-deep);
-  color: #ffffff;
-}
-.announceInner {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 9px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.announceLeft {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 12.5px;
-}
-.newBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-accent-2);
-}
-.dot {
-  width: 7px;
-  height: 7px;
-  background: var(--color-accent-2);
-  border-radius: 50%;
-  animation: emita-pulse 2.4s ease-in-out infinite;
-}
-.announceText { color: rgba(255, 255, 255, 0.86); }
-.announceLink { color: #ffffff; text-decoration: underline; text-underline-offset: 3px; }
-.announceRight {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.7);
-}
-.announceRight a { color: #ffffff; text-decoration: none; }
-
 .header {
   position: sticky;
   top: 0;
@@ -52,19 +5,6 @@
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   border-bottom: 2px solid var(--color-divider);
-}
-.progressTrack {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 2px;
-  width: 100%;
-  background: transparent;
-  pointer-events: none;
-}
-.progressBar {
-  height: 2px;
-  background: var(--color-accent);
 }
 
 .navRow {
@@ -108,20 +48,23 @@
   margin-bottom: -2px;
   cursor: pointer;
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: 400;
   font-size: 13.5px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   color: var(--color-text);
   padding: 22px 13px;
   white-space: nowrap;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
 }
 .navBtn:hover, .navBtnActive {
   border-bottom-color: var(--color-accent);
   color: var(--color-accent);
 }
+.navChevron { flex: none; transition: transform 0.15s ease; }
+.navChevronOpen { transform: rotate(180deg); }
 .navRight {
   display: flex;
   align-items: center;
@@ -133,14 +76,29 @@
 }
 .signInLink {
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: 400;
   font-size: 13.5px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   color: var(--color-text);
   text-decoration: none;
   padding: 8px 4px;
 }
 .signInLink:hover { color: var(--color-accent); }
+
+.searchToggle {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--color-text);
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.searchToggle:hover { color: var(--color-accent); }
 
 .mobileToggle {
   display: none;
@@ -164,69 +122,104 @@
 .megaInner {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 34px 40px 40px;
+  padding: 0;
   display: grid;
-  gap: 0;
+  grid-template-columns: 272px 1fr;
+  align-items: stretch;
 }
-.megaCol {
-  padding: 0 32px;
+
+/* — left: intro, CTA, secondary links — shared shape across every dropdown — */
+.megaSidebar {
+  padding: 34px 36px 34px 40px;
   border-right: 1px solid var(--color-divider);
+  display: flex;
+  flex-direction: column;
 }
-.megaCol:first-child { padding-left: 0; }
-.megaCol:last-child { border-right: 0; padding-right: 0; }
-.megaKicker {
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-neutral-600);
-  margin-bottom: 14px;
-}
-.megaLink {
-  display: block;
-  text-decoration: none;
-  color: var(--color-text);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 7px 0;
-}
-.megaFeature {
-  padding-right: 40px;
-  border-right: 1px solid var(--color-divider);
-}
-.megaFeatureKicker {
+.megaSidebarKicker {
   font-size: 10.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-accent);
   margin-bottom: 12px;
 }
-.megaFeatureTitle {
+.megaSidebarTitle {
   font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 22px;
-  line-height: 1.1;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   margin-bottom: 10px;
 }
+.megaSidebarBody {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-neutral-700);
+  margin-bottom: 20px;
+}
+.megaSidebarCta {
+  align-self: flex-start;
+  margin-bottom: 22px;
+}
+.megaSidebarLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-divider);
+}
+.megaArrowLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-line-2);
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 13px;
+  padding: 5px 0;
+}
+.megaArrowLink:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 
-.gridLink {
+/* — right: kicker + rule + link grid, repeated per section — */
+.megaContent {
+  padding: 30px 40px 30px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.megaSection { display: flex; flex-direction: column; }
+.megaSectionKicker {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-neutral-600);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--color-divider);
+}
+.megaSectionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px 28px;
+}
+.megaBoldLink {
   text-decoration: none;
   color: var(--color-text);
   display: block;
+  padding: 8px 10px;
+  margin: 0 -10px;
 }
-.gridLink:hover { background: var(--color-neutral-200); }
-.gridLinkTitle {
+.megaBoldLink:hover { background: var(--color-neutral-200); }
+.megaBoldLinkTitle {
   font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 15px;
-  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 14.5px;
+  margin-bottom: 4px;
 }
-.gridLinkBody { font-size: 12.5px; color: var(--color-neutral-700); }
-.gridLinkTitleOnly {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 15px;
-}
+.megaBoldLinkBody { font-size: 12.5px; color: var(--color-neutral-700); }
 
 .mobileNav {
   position: fixed;

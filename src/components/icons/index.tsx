@@ -55,9 +55,9 @@ export function CloseIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export function ChevronDownIcon({ size = 12 }: { size?: number }) {
+export function ChevronDownIcon({ size = 12, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width={size} height={size} viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
       <path d="M1 1.5L6 6.5L11 1.5" />
     </svg>
   );
