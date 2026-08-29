@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./console.module.css";
+import { MfaSetup } from "./MfaSetup";
 import { ACCOUNT, LIFECYCLE_LABEL, RETENTION } from "@/lib/content/settings";
 
 function Field({ label, value, hint, disabled }: { label: string; value: string; hint?: string; disabled?: boolean }) {
@@ -54,6 +55,8 @@ export function SettingsView() {
             </div>
           </div>
         </div>
+
+        <MfaSetup />
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>

@@ -1,4 +1,4 @@
-export type AuthScreen = "signin" | "twofa" | "forgot" | "sent" | "reset" | "invite" | "enrol" | "locked" | "support";
+export type AuthScreen = "signin" | "twofa" | "forgot" | "sent" | "reset" | "invite" | "enrol" | "locked" | "support" | "backoffice";
 
 export const BRAND_COPY: Record<AuthScreen, { kicker: string; title: string; body: string }> = {
   signin: {
@@ -45,6 +45,11 @@ export const BRAND_COPY: Record<AuthScreen, { kicker: string; title: string; bod
     kicker: "Access help",
     title: "Someone can unblock you today.",
     body: "Your utility administrator can reset passwords and reissue invitations without waiting for Emita.",
+  },
+  backoffice: {
+    kicker: "Emita platform admin",
+    title: "Run the platform, not just one utility.",
+    body: "Add utilities, manage access, and bill the customers of Emita itself — separate from any single utility's console.",
   },
 };
 
@@ -117,13 +122,10 @@ export const inviteDetails = {
   expires: "2 September 2026",
 };
 
-export const resetTargetEmail = "n.wanjala@bwaliro.co.ke";
-
-// Demo-only stand-ins for a real auth backend. There is no server here, so
-// sign-in and 2FA are checked against these fixed values instead.
+// A real account seeded on the Identity & Access service for demo purposes.
 export const demoAccount = {
+  accountSlug: "bwaliro-water",
   email: "n.wanjala@bwaliro.co.ke",
   password: "Bwaliro@2026",
 };
 
-export const demoOtp = "482913";

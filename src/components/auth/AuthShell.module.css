@@ -20,19 +20,19 @@
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  padding: 40px 48px;
+  padding: 24px 40px;
   min-width: 0;
 }
 .brandHead { display: flex; align-items: center; gap: 11px; flex: none; }
 .brandName { font-family: var(--font-heading); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
-.brandBody { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 44px 0; min-height: 0; }
-.brandKicker { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-2); margin-bottom: 22px; }
-.brandTitle { margin: 0 0 20px; font-size: 44px; line-height: 1.03; letter-spacing: -0.035em; max-width: 16ch; color: #ffffff; }
-.brandText { margin: 0 0 34px; font-size: 16px; line-height: 1.55; color: rgba(255, 255, 255, 0.72); max-width: 44ch; }
+.brandBody { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px 0; min-height: 0; }
+.brandKicker { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-2); margin-bottom: 12px; }
+.brandTitle { margin: 0 0 12px; font-size: 32px; line-height: 1.08; letter-spacing: -0.03em; max-width: 16ch; color: #ffffff; }
+.brandText { margin: 0 0 20px; font-size: 14.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.72); max-width: 44ch; }
 .brandFoot {
   flex: none;
   border-top: 1px solid rgba(255, 255, 255, 0.16);
-  padding-top: 20px;
+  padding-top: 14px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px 40px;
+  padding: 16px 40px;
   min-width: 0;
 }
 .formInner { width: 100%; max-width: 430px; }

@@ -5,24 +5,24 @@ import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { BackLink } from "@/components/auth/BackLink";
 import { OtpInput } from "@/components/auth/OtpInput";
-import { demoOtp } from "@/lib/content/auth";
 import styles from "@/components/auth/authForm.module.css";
-
-const START_SECONDS = 5 * 60;
 
 export default function VerifyPage() {
   const router = useRouter();
-  const [seconds, setSeconds] = useState(START_SECONDS);
+  const [method, setMethod] = useState<"email" | "totp" | null>(null);
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [verified, setVerified] = useState(false);
 
   useEffect(() => {
-    if (seconds <= 0) return;
-    const t = setInterval(() => setSeconds((s) => Math.max(0, s - 1)), 1000);
-    return () => clearInterval(t);
-  }, [seconds]);
+    if (!sessionStorage.getItem("emita_mfa_challenge")) {
+      router.replace("/login");
+      return;
+    }
+    const stored = sessionStorage.getItem("emita_mfa_method");
+    setMethod(stored === "totp" ? "totp" : "email");
+  }, [router]);
 
   useEffect(() => {
     if (!verified) return;
@@ -30,22 +30,37 @@ export default function VerifyPage() {
     return () => clearTimeout(t);
   }, [verified, router]);
 
-  const mins = Math.floor(seconds / 60);
-  const secs = String(seconds % 60).padStart(2, "0");
-
-  const handleVerify = () => {
+  const handleVerify = async () => {
     setSubmitting(true);
-    setError(false);
+    setError(null);
 
-    // Simulates a round trip to an OTP-verification backend.
-    setTimeout(() => {
-      if (code === demoOtp) {
-        setVerified(true);
+    const mfaChallengeToken = sessionStorage.getItem("emita_mfa_challenge");
+    if (!mfaChallengeToken) {
+      router.replace("/login");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth/mfa/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mfaChallengeToken, code }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message ?? "That code isn't right.");
+        setSubmitting(false);
         return;
       }
+
+      sessionStorage.removeItem("emita_mfa_challenge");
+      sessionStorage.removeItem("emita_mfa_method");
+      setVerified(true);
+    } catch {
+      setError("Could not reach the authentication service. Try again in a moment.");
       setSubmitting(false);
-      setError(true);
-    }, 700);
+    }
   };
 
   return (
@@ -57,7 +72,9 @@ export default function VerifyPage() {
       {!verified ? (
         <>
           <p className={styles.subtitle}>
-            We sent a six-digit code to <strong style={{ fontWeight: 600, color: "var(--color-text)" }}>+254 7•• ••• 412</strong>. It expires in {mins}:{secs}.
+            {method === "totp"
+              ? "Enter the current 6-digit code from your authenticator app."
+              : "We emailed a six-digit code to your address on file. It expires in 10 minutes."}
           </p>
 
           {error && (
@@ -67,8 +84,7 @@ export default function VerifyPage() {
                 <path d="M8 5v3.4M8 10.6v.4" />
               </svg>
               <span className={styles.errorText}>
-                <strong style={{ display: "block", fontWeight: 600 }}>That code isn&rsquo;t right</strong>
-                Check the digits and try again.
+                <strong style={{ display: "block", fontWeight: 600 }}>{error}</strong>
               </span>
             </div>
           )}
@@ -85,17 +101,11 @@ export default function VerifyPage() {
             {submitting ? "Verifying…" : "Verify and continue"}
           </button>
 
-          <div className={styles.infoBox} style={{ marginBottom: 20 }}>
-            <p className={styles.infoText}>
-              Demo code — <strong style={{ fontWeight: 600 }}>{demoOtp}</strong>.
+          {method === "email" && (
+            <p className={styles.footRowCenter} style={{ margin: 0 }}>
+              Didn&rsquo;t get it? <a href="/login" style={{ color: "var(--color-accent)" }}>Sign in again</a> to send a new code.
             </p>
-          </div>
-
-          <div className={styles.resendList}>
-            <button type="button" className={styles.resendBtn} style={{ color: "var(--color-accent)" }}>Resend the code by SMS</button>
-            <button type="button" className={styles.resendBtn} style={{ color: "var(--color-neutral-700)" }}>Use an authenticator app instead</button>
-            <button type="button" className={styles.resendBtn} style={{ color: "var(--color-neutral-700)" }}>Enter a recovery code</button>
-          </div>
+          )}
         </>
       ) : (
         <>

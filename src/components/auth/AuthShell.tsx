@@ -17,7 +17,7 @@ export function AuthShell({ screen, children }: { screen: AuthScreen; children: 
             <h2 className={styles.brandTitle}>{brand.title}</h2>
             <p className={styles.brandText}>{brand.body}</p>
 
-            <svg viewBox="0 0 460 240" style={{ width: "100%", maxWidth: 460, height: "auto" }}>
+            <svg viewBox="0 0 460 240" style={{ width: "100%", maxWidth: 320, height: "auto" }}>
               <g stroke="#FFFFFF" strokeWidth="1" opacity="0.12">
                 <path d="M0 60H460M0 120H460M0 180H460" />
                 <path d="M60 0V240M160 0V240M260 0V240M360 0V240" />

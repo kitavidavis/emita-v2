@@ -9,6 +9,7 @@ export function PasswordField({
   placeholder = "••••••••••",
   minLength,
   wrap = true,
+  defaultValue,
   onChange,
 }: {
   label?: string;
@@ -16,6 +17,7 @@ export function PasswordField({
   placeholder?: string;
   minLength?: number;
   wrap?: boolean;
+  defaultValue?: string;
   onChange?: (value: string) => void;
 }) {
   const [show, setShow] = useState(false);
@@ -31,6 +33,7 @@ export function PasswordField({
         required
         minLength={minLength}
         className={styles.passwordInput}
+        defaultValue={defaultValue}
         onChange={(e) => onChange?.(e.target.value)}
       />
       <button type="button" className={styles.toggleBtn} onClick={() => setShow((s) => !s)}>

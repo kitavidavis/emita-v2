@@ -10,33 +10,43 @@ import styles from "@/components/auth/authForm.module.css";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [attempts, setAttempts] = useState(0);
+  const [accountSlug, setAccountSlug] = useState(demoAccount.accountSlug);
+  const [email, setEmail] = useState(demoAccount.email);
+  const [password, setPassword] = useState(demoAccount.password);
+  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
+    setError(null);
 
-    // Simulates a round trip to an auth backend, checked against the demo account.
-    setTimeout(() => {
-      const matches =
-        email.trim().toLowerCase() === demoAccount.email && password === demoAccount.password;
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountSlug: accountSlug.trim().toLowerCase(), email, password }),
+      });
+      const data = await res.json();
 
-      if (matches) {
+      if (!res.ok) {
+        setError(data.message ?? "That workspace, email or password is incorrect.");
+        setSubmitting(false);
+        return;
+      }
+
+      if (data.mfaRequired) {
+        sessionStorage.setItem("emita_mfa_challenge", data.mfaChallengeToken);
+        sessionStorage.setItem("emita_mfa_method", data.mfaMethod ?? "");
         router.push("/verify");
         return;
       }
 
+      router.push("/dashboard");
+    } catch {
+      setError("Could not reach the authentication service. Try again in a moment.");
       setSubmitting(false);
-      const next = attempts + 1;
-      if (next >= 3) {
-        router.push("/account-locked");
-        return;
-      }
-      setAttempts(next);
-    }, 700);
+    }
   };
 
   return (
@@ -45,20 +55,30 @@ export default function LoginPage() {
       <h1 className={styles.h1}>Welcome back.</h1>
       <p className={styles.subtitle}>Sign in to your Emita console.</p>
 
-      {attempts > 0 && (
+      {error && (
         <div className={styles.errorBanner}>
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--color-bad)" strokeWidth="1.8" style={{ flex: "none", marginTop: 1 }}>
             <circle cx="8" cy="8" r="6.2" />
             <path d="M8 5v3.4M8 10.6v.4" />
           </svg>
           <span className={styles.errorText}>
-            <strong style={{ display: "block", fontWeight: 600 }}>Email or password is incorrect</strong>
-            {attempts === 1 ? "Two attempts remain" : "One attempt remains"} before the account is locked for 15 minutes.
+            <strong style={{ display: "block", fontWeight: 600 }}>{error}</strong>
           </span>
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
+        <div className={styles.field}>
+          <label className={styles.label}>Workspace</label>
+          <input
+            type="text"
+            required
+            placeholder="bwaliro-water"
+            className={styles.inputBox}
+            value={accountSlug}
+            onChange={(e) => setAccountSlug(e.target.value)}
+          />
+        </div>
         <div className={styles.field}>
           <label className={styles.label}>Work email</label>
           <input
@@ -75,7 +95,7 @@ export default function LoginPage() {
             <label className={styles.label} style={{ marginBottom: 0 }}>Password</label>
             <Link href="/forgot-password" className={styles.forgotLink}>Forgot password?</Link>
           </div>
-          <PasswordField name="password" wrap={false} onChange={setPassword} />
+          <PasswordField name="password" wrap={false} defaultValue={password} onChange={setPassword} />
         </div>
         <label className={styles.checkboxRow}>
           <input type="checkbox" defaultChecked className={styles.checkbox} />
@@ -86,14 +106,7 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <div className={styles.infoBox} style={{ marginTop: 20, marginBottom: 0 }}>
-        <p className={styles.infoText}>
-          Demo access — email <strong style={{ fontWeight: 600 }}>{demoAccount.email}</strong>, password{" "}
-          <strong style={{ fontWeight: 600 }}>{demoAccount.password}</strong>.
-        </p>
-      </div>
-
-      <div className={styles.divider}>
+      <div className={styles.divider} style={{ marginTop: 8 }}>
         <span className={styles.dividerLine} />
         <span className={styles.dividerText}>or</span>
         <span className={styles.dividerLine} />

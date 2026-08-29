@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import styles from "./console.module.css";
 import { useConsole } from "./ConsoleContext";
@@ -28,6 +28,7 @@ function findActiveKey(pathname: string): { key: string; premium: boolean } {
 
 export function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, toggleTheme } = useConsole();
   const [wide, setWide] = useState(true);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -112,12 +113,19 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className={styles.sidebarFoot}>
-          <Link href="/login" className={styles.signOutBtn}>
+          <button
+            type="button"
+            className={styles.signOutBtn}
+            onClick={async () => {
+              await fetch("/api/auth/logout", { method: "POST" });
+              router.push("/login");
+            }}
+          >
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.7" className={styles.navIcon}>
               <path d="M11 11l3-3-3-3M14 8H6M9 2H4a2 2 0 00-2 2v8a2 2 0 002 2h5" />
             </svg>
             {wide && <span>Sign out</span>}
-          </Link>
+          </button>
         </div>
       </aside>
 
