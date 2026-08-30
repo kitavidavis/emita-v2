@@ -32,3 +32,38 @@ export const INCIDENT_STATS = {
   breaching: INCIDENTS.filter((i) => i.breaching).length,
   resolvedThisMonth: 6,
 };
+
+// Customer complaints — distinct from the infrastructure incidents above. A burst main is
+// something the utility discovers; a complaint is something a customer reports, and it may or
+// may not turn out to be tied to one. The legacy system calls this whole module "Incidents" and
+// means only this; ours keeps both, since a real utility needs both.
+export type ComplaintCategory = "No water supply" | "Low pressure" | "Billing dispute" | "Water quality" | "Meter issue" | "Other";
+
+export const COMPLAINT_CATEGORIES: ComplaintCategory[] = ["No water supply", "Low pressure", "Billing dispute", "Water quality", "Meter issue", "Other"];
+
+export type Complaint = {
+  id: string;
+  customerName: string;
+  accountNumber: string;
+  phone: string;
+  category: ComplaintCategory;
+  description: string;
+  zone: string;
+  status: IncidentStatus;
+  assignedTo?: string;
+  reportedAt: string;
+};
+
+export const COMPLAINTS: Complaint[] = [
+  { id: "CMP-441", customerName: "J. Barasa", accountNumber: "BW-000158", phone: "+254720904771", category: "No water supply", description: "No water since Tuesday morning, whole street affected.", zone: "Bwaliro Central", status: "open", reportedAt: "27 Aug, 09:14" },
+  { id: "CMP-438", customerName: "Riverside Clinic", accountNumber: "BW-000129", phone: "+254722660187", category: "Low pressure", description: "Pressure has dropped noticeably over the last week.", zone: "Riverside", status: "in_progress", assignedTo: "P. Wekesa", reportedAt: "25 Aug, 14:02" },
+  { id: "CMP-430", customerName: "A. Nakhumicha", accountNumber: "BW-000174", phone: "+254701552019", category: "Billing dispute", description: "Bill is much higher than usual consumption pattern.", zone: "Elugulu North", status: "in_progress", assignedTo: "C. Mutua", reportedAt: "22 Aug, 11:30" },
+  { id: "CMP-421", customerName: "Market Kiosk 4", accountNumber: "BW-000163", phone: "+254733118402", category: "Meter issue", description: "Meter display is blank, cannot confirm reading.", zone: "Market", status: "resolved", assignedTo: "G. Atieno", reportedAt: "14 Aug, 08:45" },
+  { id: "CMP-417", customerName: "P. Wafula", accountNumber: "BW-000149", phone: "+254711004552", category: "Water quality", description: "Water has a slight discoloration since yesterday.", zone: "Bwaliro Central", status: "resolved", assignedTo: "J. Odhiambo", reportedAt: "10 Aug, 16:20" },
+];
+
+export const COMPLAINT_STATS = {
+  open: COMPLAINTS.filter((c) => c.status === "open").length,
+  inProgress: COMPLAINTS.filter((c) => c.status === "in_progress").length,
+  resolvedThisMonth: COMPLAINTS.filter((c) => c.status === "resolved").length,
+};

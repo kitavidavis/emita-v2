@@ -50,20 +50,70 @@ export const SERVICE_FEES: ServiceFee[] = [
   { id: "sf4", name: "Security deposit", amount: 1500, kind: "one-off" },
 ];
 
+// Invoice categories: named, priced line-item types. "Water Bill" is dynamic (computed from the
+// tariff at billing time); one-off charges like Disconnection are fixed. Disconnection and
+// Defaulting below don't hold their own fee amounts — they reference a category here, so the
+// number lives in exactly one place.
+export type InvoiceCategoryMode = "fixed" | "dynamic";
+export type InvoiceCategory = { id: string; name: string; mode: InvoiceCategoryMode; amount?: number };
+
+export const INVOICE_CATEGORIES: InvoiceCategory[] = [
+  { id: "water-bill", name: "Water Bill", mode: "dynamic" },
+  { id: "disconnection", name: "Disconnection", mode: "fixed", amount: 500 },
+  { id: "reconnection", name: "Reconnection", mode: "fixed", amount: 800 },
+];
+
 // Disconnection is a manual action today — there's no automated policy in the backend yet.
-// Shown here, off, rather than hidden, so it's clear the capability is planned, not silently missing.
+// Shown here, off, rather than hidden, so it's clear the capability is planned, not silently
+// missing. thresholdDays/thresholdAmount decide *eligibility* (when a customer qualifies);
+// feeCategoryId points at the Invoice Category that prices the fee actually charged.
 export const DISCONNECTION_POLICY = {
   automated: false,
   thresholdDays: 45,
   thresholdAmount: 3000,
+  chargeFeeOnDisconnect: true,
+  feeCategoryId: "disconnection",
 };
 
 // Mirrors emita.defaulting.percentage on Payments & Ledger — currently an app-wide setting, not
-// yet per-utility configurable from here. See README.
+// yet per-utility configurable from here. Grace period is per invoice category, since a
+// disconnection fee and a water bill don't need to default on the same clock.
 export const DEFAULTING_POLICY = {
   percentage: 5,
-  gracePeriodDays: 14,
+  graceDaysByCategory: [
+    { categoryId: "water-bill", days: 14 },
+    { categoryId: "disconnection", days: 7 },
+  ],
 };
+
+// M-Pesa payment pipelines (Safaricom Daraja) — a shortcode can be scoped to one DMA or all of
+// them, matching how a utility might run one paybill per zone. The passkey is what the platform
+// uses server-side to initiate Lipa Na M-Pesa Online (STK Push) against this shortcode — without
+// it we can only receive payments a customer sends manually, never prompt their phone to pay.
+export type ShortcodeType = "paybill" | "till";
+export type PaymentPipeline = {
+  id: string;
+  shortCode: string;
+  type: ShortcodeType;
+  dma: string; // zone name, or "All DMAs"
+  consumerKey: string;
+  consumerSecret: string;
+  passkey: string;
+  registered: boolean;
+};
+
+export const PAYMENT_PIPELINES: PaymentPipeline[] = [
+  {
+    id: "pp1",
+    shortCode: "400200",
+    type: "paybill",
+    dma: "All DMAs",
+    consumerKey: "qzR7...m4Lp",
+    consumerSecret: "••••••••••••",
+    passkey: "••••••••••••",
+    registered: true,
+  },
+];
 
 // Scheduled automation — none of this exists in the backend yet (every cycle/task run today is
 // triggered by an explicit API call). See README.
